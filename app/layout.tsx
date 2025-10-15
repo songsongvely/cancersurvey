@@ -15,8 +15,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="flex min-h-screen flex-col">
           <header className="border-b border-slate-200 bg-white/80 backdrop-blur shadow-sm">
             <div className="container-narrow flex h-16 items-center justify-between">
-              <Link href="/" className="text-lg font-semibold tracking-tight hover:text-blue-600 transition-colors">
-                암 설문조사
+              <Link href="/" className="group flex flex-col leading-tight">
+                <span className="text-xs font-semibold uppercase tracking-[0.45em] text-slate-600 group-hover:text-blue-600 transition-colors">
+                  단국대학교 의과대학
+                </span>
+                <span className="text-lg font-semibold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500">
+                  지역 사회 의학 3조
+                </span>
               </Link>
               <nav className="flex gap-2">
                 <Link className="btn-ghost" href="/survey">설문 시작</Link>
