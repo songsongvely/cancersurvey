@@ -13,6 +13,7 @@ export const CANCER_TYPES = [
   "췌장암",
   "혈액암",
   "기타",
+  "해당 사항 없음",
 ] as const;
 
 export const SCREENING_TYPES = [
@@ -106,7 +107,14 @@ const baseFields = {
 
   heardFrom: z.enum(["SNS", "FRIEND", "HEALTHCARE", "OTHER"]).optional(),
   consentFollowup: z.boolean().optional().default(false),
-  email: z.string().email("올바른 이메일을 입력해 주세요.").optional(),
+  email: z.preprocess(
+    (val) => {
+      if (typeof val !== "string") return undefined;
+      const trimmed = val.trim();
+      return trimmed === "" ? undefined : trimmed;
+    },
+    z.union([z.undefined(), z.string().email("올바른 이메일을 입력해 주세요.")])
+  ),
   comments: z
     .string()
     .max(2000, "자유의견은 2000자 이내로 작성해 주세요.")

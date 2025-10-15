@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { useForm } from "react-hook-form";
+import clsx from "clsx";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import {
@@ -16,14 +17,17 @@ export default function SurveyForm() {
   const router = useRouter();
   const {
     register,
+    control,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<SubmissionFormInput>({
     resolver: zodResolver(submissionFormSchema),
     defaultValues: {
       consent: false, // 입력 단계에서는 false OK (제출 시 true여야 통과)
       screeningRecent: false,
+      familyHistory: false,
       personalHistory: [],
       screeningTypes: [],
       symptoms: [],
@@ -34,6 +38,8 @@ export default function SurveyForm() {
 
   const screeningRecent = watch("screeningRecent");
   const consentFollowup = watch("consentFollowup");
+  const symptoms = watch("symptoms");
+  const NONE_OPTION = "해당 사항 없음";
   const height = watch("heightCm");
   const weight = watch("weightKg");
 
@@ -222,54 +228,162 @@ export default function SurveyForm() {
       <section className="space-y-4">
         <div>
           <label className="label">개인 암 진단 이력 (해당 모두 선택)</label>
-          <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-3">
-            {CANCER_TYPES.map((t) => (
-              <label key={t} className="choice-tile">
-                <input
-                  type="checkbox"
-                  value={t}
-                  {...register("personalHistory")}
-                />
-                {t}
-              </label>
-            ))}
-          </div>
+          <Controller
+            name="personalHistory"
+            control={control}
+            render={({ field: { value = [], onChange } }) => {
+              const toggle = (option: (typeof CANCER_TYPES)[number]) => {
+                const current = Array.isArray(value) ? [...value] : [];
+                const isSelected = current.includes(option);
+                if (option === NONE_OPTION) {
+                  onChange(isSelected ? [] : [NONE_OPTION]);
+                  return;
+                }
+                const filtered = current.filter((item) => item !== option);
+                const next = isSelected ? filtered : [...filtered, option];
+                const cleaned = next.filter((item) => item !== NONE_OPTION);
+                onChange(cleaned);
+              };
+              return (
+                <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-3">
+                  {CANCER_TYPES.map((t) => {
+                    const checked = Array.isArray(value) && value.includes(t);
+                    return (
+                      <label
+                        key={t}
+                        className={clsx(
+                          "choice-tile",
+                          checked && "choice-tile-active"
+                        )}
+                      >
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={checked}
+                          onChange={() => toggle(t)}
+                        />
+                        {t}
+                      </label>
+                    );
+                  })}
+                </div>
+              );
+            }}
+          />
         </div>
 
         <div>
           <label className="label">가족력</label>
-          <div className="mt-2">
-            <label className="choice-tile">
-              <input type="checkbox" {...register("familyHistory")} />
-              직계 가족 중 암 진단자 있음
-            </label>
-          </div>
+          <Controller
+            name="familyHistory"
+            control={control}
+            render={({ field: { value = false, onChange } }) => (
+              <div className="mt-2 grid grid-cols-2 gap-3 sm:max-w-md">
+                <button
+                  type="button"
+                  onClick={() => onChange(false)}
+                  className={clsx(
+                    "choice-tile justify-center",
+                    value === false && "choice-tile-active"
+                  )}
+                  aria-pressed={value === false}
+                >
+                  없음
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onChange(true)}
+                  className={clsx(
+                    "choice-tile justify-center",
+                    value === true && "choice-tile-active"
+                  )}
+                  aria-pressed={value === true}
+                >
+                  직계 가족 중 암 진단자 있음
+                </button>
+              </div>
+            )}
+          />
         </div>
       </section>
 
       <section className="space-y-4">
         <div>
           <label className="label">최근 2년 내 국가/개인 암 검진 여부</label>
-          <label className="choice-tile mt-2">
-            <input type="checkbox" {...register("screeningRecent")} />예 (해당
-            시 아래에서 검진 종류 선택)
-          </label>
+          <Controller
+            name="screeningRecent"
+            control={control}
+            render={({ field: { value = false, onChange } }) => (
+              <div className="mt-2 grid grid-cols-1 gap-3 sm:max-w-md sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={() => onChange(true)}
+                  className={clsx(
+                    "choice-tile justify-center",
+                    value === true && "choice-tile-active"
+                  )}
+                  aria-pressed={value === true}
+                >
+                  예 (해당 시 검진 종류 선택)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    onChange(false);
+                    setValue("screeningTypes", []);
+                  }}
+                  className={clsx(
+                    "choice-tile justify-center",
+                    value === false && "choice-tile-active"
+                  )}
+                  aria-pressed={value === false}
+                >
+                  해당 없음
+                </button>
+              </div>
+            )}
+          />
         </div>
         {screeningRecent && (
           <div>
             <label className="label">검진 종류 (해당 모두 선택)</label>
-            <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-2">
-              {SCREENING_TYPES.map((t) => (
-                <label key={t} className="choice-tile">
-                  <input
-                    type="checkbox"
-                    value={t}
-                    {...register("screeningTypes")}
-                  />
-                  {t}
-                </label>
-              ))}
-            </div>
+            <Controller
+              name="screeningTypes"
+              control={control}
+              render={({ field: { value = [], onChange } }) => {
+                const toggle = (option: (typeof SCREENING_TYPES)[number]) => {
+                  const current = Array.isArray(value) ? [...value] : [];
+                  const isSelected = current.includes(option);
+                  const filtered = current.filter((item) => item !== option);
+                  const next = isSelected ? filtered : [...filtered, option];
+                  onChange(next);
+                };
+                return (
+                  <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-2">
+                    {SCREENING_TYPES.map((t) => {
+                      const checked = Array.isArray(value) && value.includes(t);
+                      return (
+                        <label
+                          key={t}
+                          className={clsx(
+                            "choice-tile",
+                            checked && "choice-tile-active"
+                          )}
+                        >
+                          <input
+                            type="checkbox"
+                            className="sr-only"
+                            checked={checked}
+                            onChange={() => toggle(t)}
+                          />
+                          {t}
+                        </label>
+                      );
+                    })}
+                  </div>
+                );
+              }}
+            />
           </div>
         )}
       </section>
@@ -279,7 +393,13 @@ export default function SurveyForm() {
           <label className="label">최근 한달 내 증상 (해당 모두 선택)</label>
           <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-2">
             {SYMPTOMS.map((t) => (
-              <label key={t} className="choice-tile">
+              <label
+                key={t}
+                className={clsx(
+                  "choice-tile",
+                  Array.isArray(symptoms) && symptoms.includes(t) && "choice-tile-active"
+                )}
+              >
                 <input type="checkbox" value={t} {...register("symptoms")} />
                 {t}
               </label>
@@ -346,7 +466,12 @@ export default function SurveyForm() {
               {...register("email")}
             />
             {errors.email && <p className="error">{errors.email.message}</p>}
-            <label className="choice-tile mt-3">
+            <label
+              className={clsx(
+                "choice-tile mt-3",
+                consentFollowup && "choice-tile-active"
+              )}
+            >
               <input type="checkbox" {...register("consentFollowup")} />
               추가 연락(결과 안내 등)에 동의합니다.
             </label>

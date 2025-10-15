@@ -42,10 +42,13 @@ a {
 hr { @apply border-slate-200; }
 
 .choice-tile {
-  @apply inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors;
+  @apply inline-flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition-colors cursor-pointer select-none;
 }
 .choice-tile:hover {
   @apply border-blue-400 text-blue-600;
+}
+.choice-tile-active {
+  @apply border-blue-500 bg-blue-50 text-blue-700 shadow-md;
 }
 .choice-tile input {
   @apply accent-blue-600;
