@@ -6,9 +6,9 @@ export default function ConsentPanel() {
   const [open, setOpen] = useState(false)
   return (
     <section className="card">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-xl font-semibold">참여 동의 및 개인정보 안내</h2>
-        <button className="btn-ghost" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
+        <button className="btn-ghost whitespace-nowrap" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
           {open ? '접기' : '자세히'}
         </button>
       </div>

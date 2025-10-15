@@ -491,8 +491,8 @@ export default function SurveyForm() {
         </div>
       </section>
 
-      <section className="space-y-3">
-        <label className="choice-tile items-start">
+      <section className="space-y-5">
+        <label className="choice-tile items-start sm:items-center">
           <input type="checkbox" {...register("consent")} />
           <span>
             <b>참여 및 개인정보 처리에 동의</b>합니다. 본 설문은 익명으로
@@ -501,8 +501,8 @@ export default function SurveyForm() {
           </span>
         </label>
         {errors.consent && <p className="error">{errors.consent.message}</p>}
-        <div className="flex items-center gap-3">
-          <button className="btn" type="submit" disabled={isSubmitting}>
+        <div className="flex flex-wrap items-center gap-3">
+          <button className="btn min-w-[110px]" type="submit" disabled={isSubmitting}>
             제출
           </button>
           <span className="text-xs text-slate-500">
