@@ -61,7 +61,7 @@ export default function SurveyForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="label">성별 *</label>
@@ -126,8 +126,8 @@ export default function SurveyForm() {
 
         <div>
           <label className="label">흡연 상태 *</label>
-          <div className="mt-1 grid grid-cols-3 gap-2">
-            <label className="inline-flex items-center gap-2">
+          <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <label className="choice-tile">
               <input
                 type="radio"
                 value="NEVER"
@@ -135,7 +135,7 @@ export default function SurveyForm() {
               />
               비흡연
             </label>
-            <label className="inline-flex items-center gap-2">
+            <label className="choice-tile">
               <input
                 type="radio"
                 value="FORMER"
@@ -143,7 +143,7 @@ export default function SurveyForm() {
               />
               과거 흡연
             </label>
-            <label className="inline-flex items-center gap-2">
+            <label className="choice-tile">
               <input
                 type="radio"
                 value="CURRENT"
@@ -222,9 +222,9 @@ export default function SurveyForm() {
       <section className="space-y-4">
         <div>
           <label className="label">개인 암 진단 이력 (해당 모두 선택)</label>
-          <div className="mt-1 grid grid-cols-2 md:grid-cols-3 gap-2">
+          <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-3">
             {CANCER_TYPES.map((t) => (
-              <label key={t} className="inline-flex items-center gap-2">
+              <label key={t} className="choice-tile">
                 <input
                   type="checkbox"
                   value={t}
@@ -238,8 +238,8 @@ export default function SurveyForm() {
 
         <div>
           <label className="label">가족력</label>
-          <div className="mt-1">
-            <label className="inline-flex items-center gap-2">
+          <div className="mt-2">
+            <label className="choice-tile">
               <input type="checkbox" {...register("familyHistory")} />
               직계 가족 중 암 진단자 있음
             </label>
@@ -250,7 +250,7 @@ export default function SurveyForm() {
       <section className="space-y-4">
         <div>
           <label className="label">최근 2년 내 국가/개인 암 검진 여부</label>
-          <label className="inline-flex items-center gap-2 mt-1">
+          <label className="choice-tile mt-2">
             <input type="checkbox" {...register("screeningRecent")} />예 (해당
             시 아래에서 검진 종류 선택)
           </label>
@@ -258,9 +258,9 @@ export default function SurveyForm() {
         {screeningRecent && (
           <div>
             <label className="label">검진 종류 (해당 모두 선택)</label>
-            <div className="mt-1 grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-2">
               {SCREENING_TYPES.map((t) => (
-                <label key={t} className="inline-flex items-center gap-2">
+                <label key={t} className="choice-tile">
                   <input
                     type="checkbox"
                     value={t}
@@ -277,9 +277,9 @@ export default function SurveyForm() {
       <section className="space-y-4">
         <div>
           <label className="label">최근 한달 내 증상 (해당 모두 선택)</label>
-          <div className="mt-1 grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="mt-2 grid grid-cols-1 gap-3 md:grid-cols-2">
             {SYMPTOMS.map((t) => (
-              <label key={t} className="inline-flex items-center gap-2">
+              <label key={t} className="choice-tile">
                 <input type="checkbox" value={t} {...register("symptoms")} />
                 {t}
               </label>
@@ -305,14 +305,14 @@ export default function SurveyForm() {
           <div>
             <label className="label">본인 암 발생 위험 체감 (1~5)</label>
             <input
-              className="w-full"
+              className="w-full accent-blue-600"
               type="range"
               min={1}
               max={5}
               step={1}
               {...register("riskPerception")}
             />
-            <div className="flex justify-between text-xs text-slate-400">
+            <div className="flex justify-between text-xs text-slate-500">
               {[1, 2, 3, 4, 5].map((n) => (
                 <span key={n}>{n}</span>
               ))}
@@ -346,7 +346,7 @@ export default function SurveyForm() {
               {...register("email")}
             />
             {errors.email && <p className="error">{errors.email.message}</p>}
-            <label className="inline-flex items-center gap-2 mt-2">
+            <label className="choice-tile mt-3">
               <input type="checkbox" {...register("consentFollowup")} />
               추가 연락(결과 안내 등)에 동의합니다.
             </label>
@@ -367,7 +367,7 @@ export default function SurveyForm() {
       </section>
 
       <section className="space-y-3">
-        <label className="inline-flex items-start gap-2">
+        <label className="choice-tile items-start">
           <input type="checkbox" {...register("consent")} />
           <span>
             <b>참여 및 개인정보 처리에 동의</b>합니다. 본 설문은 익명으로
@@ -380,7 +380,7 @@ export default function SurveyForm() {
           <button className="btn" type="submit" disabled={isSubmitting}>
             제출
           </button>
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-slate-500">
             제출을 누르면 위 내용에 동의한 것으로 간주됩니다.
           </span>
         </div>

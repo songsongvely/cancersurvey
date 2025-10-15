@@ -16,8 +16,8 @@ function Bar({
   return (
     <div>
       <div className="flex items-center justify-between text-sm">
-        <span className="text-slate-200">{label}</span>
-        <span className="text-slate-400">
+        <span className="text-slate-700 font-medium">{label}</span>
+        <span className="text-slate-500">
           {count}명 ({pct}%)
         </span>
       </div>
@@ -49,9 +49,9 @@ export default async function AdminPage({
 
   if (!authorized) {
     return (
-      <div className="card">
-        <h1 className="text-2xl font-semibold">관리자</h1>
-        <p className="mt-2 text-rose-400">
+      <div className="card space-y-4">
+        <h1 className="text-3xl font-semibold tracking-tight">관리자</h1>
+        <p className="text-rose-500">
           접근 권한이 없습니다. URL에 <code>?key=...</code>를 포함해 주세요.
         </p>
       </div>
@@ -112,21 +112,21 @@ export default async function AdminPage({
 
   return (
     <div className="space-y-8">
-      <div className="card">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">관리자 대시보드</h1>
+      <div className="card space-y-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h1 className="text-3xl font-semibold tracking-tight">관리자 대시보드</h1>
           <Link className="btn" href={`/api/export?key=${key}`}>
             CSV 다운로드
           </Link>
         </div>
-        <p className="mt-2 text-slate-300">
+        <p className="text-slate-600">
           총 응답 수: <b>{total}명</b>
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="card space-y-3">
-          <h2 className="text-lg font-semibold">성별</h2>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="card space-y-4">
+          <h2 className="text-lg font-semibold text-slate-800">성별</h2>
           {sexVals.map(({ v, label }) => (
             <Bar
               key={v}
@@ -137,8 +137,8 @@ export default async function AdminPage({
           ))}
         </div>
 
-        <div className="card space-y-3">
-          <h2 className="text-lg font-semibold">연령대</h2>
+        <div className="card space-y-4">
+          <h2 className="text-lg font-semibold text-slate-800">연령대</h2>
           {ageVals.map(({ v, label }) => (
             <Bar
               key={v}
@@ -149,8 +149,8 @@ export default async function AdminPage({
           ))}
         </div>
 
-        <div className="card space-y-3">
-          <h2 className="text-lg font-semibold">흡연 상태</h2>
+        <div className="card space-y-4">
+          <h2 className="text-lg font-semibold text-slate-800">흡연 상태</h2>
           {smokingVals.map(({ v, label }) => (
             <Bar
               key={v}
@@ -161,8 +161,8 @@ export default async function AdminPage({
           ))}
         </div>
 
-        <div className="card space-y-3">
-          <h2 className="text-lg font-semibold">BMI 분류</h2>
+        <div className="card space-y-4">
+          <h2 className="text-lg font-semibold text-slate-800">BMI 분류</h2>
           {bmiVals.map(({ v, label }) => (
             <Bar
               key={v}
@@ -173,8 +173,8 @@ export default async function AdminPage({
           ))}
         </div>
 
-        <div className="card space-y-3">
-          <h2 className="text-lg font-semibold">암 검진 여부 (최근 2년)</h2>
+        <div className="card space-y-4">
+          <h2 className="text-lg font-semibold text-slate-800">암 검진 여부 (최근 2년)</h2>
           <Bar
             label="예"
             count={responses.filter((r) => r.screeningRecent).length}
@@ -187,8 +187,8 @@ export default async function AdminPage({
           />
         </div>
 
-        <div className="card space-y-3">
-          <h2 className="text-lg font-semibold">증상 (중복 포함)</h2>
+        <div className="card space-y-4">
+          <h2 className="text-lg font-semibold text-slate-800">증상 (중복 포함)</h2>
           {symptomVals.map((s) => {
             const cnt = responses.reduce(
               (acc, r: any) =>
