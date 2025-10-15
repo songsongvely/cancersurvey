@@ -5,47 +5,45 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"  // 운영: Postgres 사용
+  provider = "postgresql" // 운영: Postgres 사용
   url      = env("DATABASE_URL")
 }
 
-/**
- * 호환성을 위해 enum/Json 대신 문자열/숫자만 사용합니다.
- * 체크박스/다중선택은 JSON 문자열로 저장합니다.
- */
+// enum/Json 대신 문자열/숫자만 사용합니다.
+// 체크박스/다중선택은 JSON 문자열로 저장합니다.
 model Response {
-  id               String   @id @default(cuid())
-  createdAt        DateTime @default(now())
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
 
-  consent          Boolean
+  consent Boolean
 
   // 단일 선택 값들은 문자열로 저장 (예: "MALE", "A18_29", "SEOUL", ...)
-  sex              String
-  ageGroup         String
-  region           String
+  sex      String
+  ageGroup String
+  region   String
 
   // 다중 선택 값들은 JSON 문자열로 저장 (예: '["유방암","폐암"]')
-  personalHistory  String?   // JSON string
-  familyHistory    Boolean
+  personalHistory String? // JSON string
+  familyHistory   Boolean
 
-  smokingStatus    String    // "NEVER" | "FORMER" | "CURRENT"
-  alcoholFrequency String    // "NONE" | "MONTHLY_1_OR_LESS" | ...
-  physicalActivity String    // "LOW" | "MEDIUM" | "HIGH"
+  smokingStatus    String // "NEVER" | "FORMER" | "CURRENT"
+  alcoholFrequency String // "NONE" | "MONTHLY_1_OR_LESS" | ...
+  physicalActivity String // "LOW" | "MEDIUM" | "HIGH"
 
-  heightCm         Int?
-  weightKg         Int?
-  bmi              Float?
-  bmiCategory      String?   // "UNDERWEIGHT" | "NORMAL" | "OVERWEIGHT" | "OBESE"
+  heightCm    Int?
+  weightKg    Int?
+  bmi         Float?
+  bmiCategory String? // "UNDERWEIGHT" | "NORMAL" | "OVERWEIGHT" | "OBESE"
 
-  screeningRecent  Boolean
-  screeningTypes   String?   // JSON string
-  symptoms         String?   // JSON string
+  screeningRecent Boolean
+  screeningTypes  String? // JSON string
+  symptoms        String? // JSON string
 
-  knowledgeLevel   String     // "LOW" | "MEDIUM" | "HIGH"
-  riskPerception   Int        // 1~5
+  knowledgeLevel String // "LOW" | "MEDIUM" | "HIGH"
+  riskPerception Int // 1~5
 
-  heardFrom        String?
-  email            String?
-  consentFollowup  Boolean?
-  comments         String?
+  heardFrom       String?
+  email           String?
+  consentFollowup Boolean?
+  comments        String?
 }
