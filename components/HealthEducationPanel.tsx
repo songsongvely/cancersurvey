@@ -127,9 +127,9 @@ const infoSections: InfoSection[] = [
         kind: "imageRow",
         images: [
           {
-            src: imageC,
+            src: imageA,
             alt: "미세먼지와 폐암 위험 관련 인포그래픽 C",
-            label: "A",
+            label: "C",
           },
           {
             src: imageD,
