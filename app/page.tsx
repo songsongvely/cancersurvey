@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import ConsentPanel from '@/components/ConsentPanel'
+import HealthEducationPanel from '@/components/HealthEducationPanel'
 
 export default function HomePage() {
   return (
@@ -19,6 +20,7 @@ export default function HomePage() {
         </div>
       </section>
       <ConsentPanel />
+      <HealthEducationPanel />
     </div>
   )
 }
