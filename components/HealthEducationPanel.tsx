@@ -1,37 +1,37 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Image, { type StaticImageData } from 'next/image'
+import { useState } from "react";
+import Image, { type StaticImageData } from "next/image";
 
-import imageA from '@/app/image/a.png'
-import imageB from '@/app/image/b.png'
-import imageC from '@/app/image/c.png'
-import imageD from '@/app/image/d.png'
+import imageA from "@/app/image/a.png";
+import imageB from "@/app/image/b.png";
+import imageC from "@/app/image/c.png";
+import imageD from "@/app/image/d.png";
 
 type ImageBlock = {
-  src: StaticImageData
-  alt: string
-  label: string
-}
+  src: StaticImageData;
+  alt: string;
+  label: string;
+};
 
 type InfoBlock =
-  | { kind: 'text'; value: string }
-  | { kind: 'image'; image: ImageBlock }
-  | { kind: 'imageRow'; images: ImageBlock[] }
+  | { kind: "text"; value: string }
+  | { kind: "image"; image: ImageBlock }
+  | { kind: "imageRow"; images: ImageBlock[] };
 
 type InfoSection = {
-  id: string
-  title: string
-  blocks: InfoBlock[]
-}
+  id: string;
+  title: string;
+  blocks: InfoBlock[];
+};
 
 const infoSections: InfoSection[] = [
   {
-    id: 'alcohol',
-    title: '주제 1: 음주와 암',
+    id: "alcohol",
+    title: "주제 1: 음주와 암",
     blocks: [
       {
-        kind: 'text',
+        kind: "text",
         value: String.raw`술, 얼마나 마시면 암 걸릴까?
  
 음주와 암
@@ -41,15 +41,15 @@ const infoSections: InfoSection[] = [
 과거에는 '적당한 음주'가 심혈관 질환 예방에 도움이 된다는 인식이 있었지만, 암에 있어서는 이야기가 다르다. 세계보건기구(WHO) 산하 국제암연구소(IARC)는 술의 주성분인 알코올과 그 대사산물인 아세트알데히드를 1군(Group 1) 발암물질로 지정하고 있다.`,
       },
       {
-        kind: 'image',
+        kind: "image",
         image: {
-          src: imageA,
-          alt: '음주와 암 관련 인포그래픽 A',
-          label: 'A',
+          src: imageB,
+          alt: "음주와 암 관련 인포그래픽 A",
+          label: "A",
         },
       },
       {
-        kind: 'text',
+        kind: "text",
         value: String.raw` 
  
                 
@@ -69,11 +69,11 @@ const infoSections: InfoSection[] = [
     ],
   },
   {
-    id: 'sunscreen',
-    title: '주제 2: 자외선과 피부암',
+    id: "sunscreen",
+    title: "주제 2: 자외선과 피부암",
     blocks: [
       {
-        kind: 'text',
+        kind: "text",
         value: String.raw`선크림, 안 바르면 정말 암에 걸릴까?
  
 자외선 노출과 피부암
@@ -87,15 +87,15 @@ const infoSections: InfoSection[] = [
 이러한 피부암, 선크림으로 막을 수 있습니다. 선크림은 피부암 예방의 핵심 도구이며, 자외선을 흡수하거나 반사하여 피부 세포의 손상을 막는 역할을 합니다. 미국 피부암 재단(The Skin Cancer Foundation)에 따르면, SPF 15 이상의 선크림을 매일 꾸준히 사용하면 편평세포암(SCC) 위험을 약 40%, 흑색종 위험을 **50%**까지 낮출 수 있습니다.`,
       },
       {
-        kind: 'image',
+        kind: "image",
         image: {
-          src: imageB,
-          alt: '선크림 사용과 피부암 예방 관련 인포그래픽 B',
-          label: 'B',
+          src: imageC,
+          alt: "선크림 사용과 피부암 예방 관련 인포그래픽 B",
+          label: "B",
         },
       },
       {
-        kind: 'text',
+        kind: "text",
         value: String.raw` 
                          
 
@@ -111,11 +111,11 @@ const infoSections: InfoSection[] = [
     ],
   },
   {
-    id: 'fine-dust',
-    title: '주제 3: 미세먼지와 폐암 위험',
+    id: "fine-dust",
+    title: "주제 3: 미세먼지와 폐암 위험",
     blocks: [
       {
-        kind: 'text',
+        kind: "text",
         value: String.raw`미세먼지 많은 날 마스크 안 쓰면 암 걸릴까?
  
  
@@ -124,22 +124,22 @@ const infoSections: InfoSection[] = [
 미세먼지 많은 날 마스크를 한 번 안 썼다고 바로 암에 걸리는 것은 아니지만, 장기적이고 반복적인 노출은 폐암 발생 위험을 분명히 높인다.`,
       },
       {
-        kind: 'imageRow',
+        kind: "imageRow",
         images: [
           {
             src: imageC,
-            alt: '미세먼지와 폐암 위험 관련 인포그래픽 C',
-            label: 'C',
+            alt: "미세먼지와 폐암 위험 관련 인포그래픽 C",
+            label: "A",
           },
           {
             src: imageD,
-            alt: '미세먼지 마스크 착용 통계 인포그래픽 D',
-            label: 'D',
+            alt: "미세먼지 마스크 착용 통계 인포그래픽 D",
+            label: "D",
           },
         ],
       },
       {
-        kind: 'text',
+        kind: "text",
         value: String.raw`                                                  
 
           
@@ -162,11 +162,11 @@ const infoSections: InfoSection[] = [
     ],
   },
   {
-    id: 'sleep',
-    title: '주제 4: 수면과 암 위험',
+    id: "sleep",
+    title: "주제 4: 수면과 암 위험",
     blocks: [
       {
-        kind: 'text',
+        kind: "text",
         value: String.raw`수면 부족, 정말 암의 원인이 될까?
  
 🔹 1. 결론부터 말하자면
@@ -197,11 +197,11 @@ DNA 복구 지연
     ],
   },
   {
-    id: 'charred-food',
-    title: '주제 5: 탄 음식과 발암물질',
+    id: "charred-food",
+    title: "주제 5: 탄 음식과 발암물질",
     blocks: [
       {
-        kind: 'text',
+        kind: "text",
         value: String.raw`탄 음식, 정말 암을 유발할까?
 🔹 1. 결론부터 말하자면
 예, 장기적으로는 발암 위험이 있습니다.
@@ -239,16 +239,18 @@ DNA에 직접 결합해 돌연변이(mutation) 를 일으킵니다.
       },
     ],
   },
-]
+];
 
 export default function HealthEducationPanel() {
   return (
     <section className="card space-y-6">
       <div className="space-y-2">
-        <h2 className="text-xl font-semibold text-slate-900">생활습관과 암 예방 정보</h2>
+        <h2 className="text-xl font-semibold text-slate-900">
+          생활습관과 암 예방 정보
+        </h2>
         <p className="text-sm text-slate-600">
-          생활 습관과 환경적 요인이 암 발생 위험에 어떤 영향을 줄 수 있는지에 대한 자료입니다. 각 주제를 눌러 자세한 설명을
-          확인하세요.
+          생활 습관과 환경적 요인이 암 발생 위험에 어떤 영향을 줄 수 있는지에
+          대한 자료입니다. 각 주제를 눌러 자세한 설명을 확인하세요.
         </p>
       </div>
       <div className="space-y-4">
@@ -257,17 +259,19 @@ export default function HealthEducationPanel() {
         ))}
       </div>
     </section>
-  )
+  );
 }
 
 function InfoItem({ section }: { section: InfoSection }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   return (
     <article className="rounded-2xl border border-slate-200/60 bg-slate-50/80 p-5 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-1">
           <span className="badge">정보</span>
-          <h3 className="text-lg font-semibold text-slate-900">{section.title}</h3>
+          <h3 className="text-lg font-semibold text-slate-900">
+            {section.title}
+          </h3>
         </div>
         <button
           type="button"
@@ -276,7 +280,7 @@ function InfoItem({ section }: { section: InfoSection }) {
           aria-expanded={open}
           aria-controls={`info-${section.id}`}
         >
-          {open ? '접기' : '자세히'}
+          {open ? "접기" : "자세히"}
         </button>
       </div>
       {open && (
@@ -285,16 +289,19 @@ function InfoItem({ section }: { section: InfoSection }) {
           className="mt-4 space-y-5 rounded-xl border border-emerald-100 bg-white/80 p-4 text-slate-700 leading-relaxed"
         >
           {section.blocks.map((block, index) => {
-            if (block.kind === 'text') {
+            if (block.kind === "text") {
               return (
                 <div key={index} className="whitespace-pre-wrap">
                   {block.value}
                 </div>
-              )
+              );
             }
-            if (block.kind === 'image') {
+            if (block.kind === "image") {
               return (
-                <figure key={index} className="flex flex-col items-center gap-3">
+                <figure
+                  key={index}
+                  className="flex flex-col items-center gap-3"
+                >
                   <span className="inline-flex items-center rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold tracking-wide text-slate-700">
                     이미지 {block.image.label}
                   </span>
@@ -304,7 +311,7 @@ function InfoItem({ section }: { section: InfoSection }) {
                     className="w-full max-w-2xl rounded-xl border border-slate-200/70 bg-white object-cover"
                   />
                 </figure>
-              )
+              );
             }
             return (
               <div
@@ -312,7 +319,10 @@ function InfoItem({ section }: { section: InfoSection }) {
                 className="flex flex-col items-center justify-center gap-6 sm:flex-row"
               >
                 {block.images.map((image) => (
-                  <figure key={image.label} className="flex w-full max-w-sm flex-col items-center gap-3">
+                  <figure
+                    key={image.label}
+                    className="flex w-full max-w-sm flex-col items-center gap-3"
+                  >
                     <span className="inline-flex items-center rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold tracking-wide text-slate-700">
                       이미지 {image.label}
                     </span>
@@ -324,11 +334,10 @@ function InfoItem({ section }: { section: InfoSection }) {
                   </figure>
                 ))}
               </div>
-            )
+            );
           })}
         </div>
       )}
     </article>
-  )
+  );
 }
-
