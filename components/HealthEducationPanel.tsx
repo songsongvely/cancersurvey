@@ -1,25 +1,56 @@
 'use client'
 
 import { useState } from 'react'
+import Image, { type StaticImageData } from 'next/image'
+
+import imageA from '@/app/image/a.png'
+import imageB from '@/app/image/b.png'
+import imageC from '@/app/image/c.png'
+import imageD from '@/app/image/d.png'
+
+type ImageBlock = {
+  src: StaticImageData
+  alt: string
+  label: string
+}
+
+type InfoBlock =
+  | { kind: 'text'; value: string }
+  | { kind: 'image'; image: ImageBlock }
+  | { kind: 'imageRow'; images: ImageBlock[] }
 
 type InfoSection = {
   id: string
   title: string
-  content: string
+  blocks: InfoBlock[]
 }
 
 const infoSections: InfoSection[] = [
   {
     id: 'alcohol',
     title: '주제 1: 음주와 암',
-    content: String.raw`술, 얼마나 마시면 암 걸릴까?
+    blocks: [
+      {
+        kind: 'text',
+        value: String.raw`술, 얼마나 마시면 암 걸릴까?
  
 음주와 암
  
 암 예방을 위한 '안전한 음주량'은 없다. 단 한 잔의 술도 암 발생 위험을 높일 수 있다.
  
-과거에는 '적당한 음주'가 심혈관 질환 예방에 도움이 된다는 인식이 있었지만, 암에 있어서는 이야기가 다르다. 세계보건기구(WHO) 산하 국제암연구소(IARC)는 술의 주성분인 알코올과 그 대사산물인 아세트알데히드를 1군(Group 1) 발암물질로 지정하고 있다.
- 
+과거에는 '적당한 음주'가 심혈관 질환 예방에 도움이 된다는 인식이 있었지만, 암에 있어서는 이야기가 다르다. 세계보건기구(WHO) 산하 국제암연구소(IARC)는 술의 주성분인 알코올과 그 대사산물인 아세트알데히드를 1군(Group 1) 발암물질로 지정하고 있다.`,
+      },
+      {
+        kind: 'image',
+        image: {
+          src: imageA,
+          alt: '음주와 암 관련 인포그래픽 A',
+          label: 'A',
+        },
+      },
+      {
+        kind: 'text',
+        value: String.raw` 
  
                 
 
@@ -34,11 +65,16 @@ const infoSections: InfoSection[] = [
 어떻게 예방 할 수 있을까?
  
 '암에 걸리는 특정 음주량'은 정해져 있지 않으며, 암 예방을 위한 최선의 선택은 '금주' 또는 '절주'를 통해 총 음주량을 최소화하는 것이다.`,
+      },
+    ],
   },
   {
     id: 'sunscreen',
     title: '주제 2: 자외선과 피부암',
-    content: String.raw`선크림, 안 바르면 정말 암에 걸릴까?
+    blocks: [
+      {
+        kind: 'text',
+        value: String.raw`선크림, 안 바르면 정말 암에 걸릴까?
  
 자외선 노출과 피부암
  
@@ -48,8 +84,19 @@ const infoSections: InfoSection[] = [
  
 선크림과 피부암 예방
  
-이러한 피부암, 선크림으로 막을 수 있습니다. 선크림은 피부암 예방의 핵심 도구이며, 자외선을 흡수하거나 반사하여 피부 세포의 손상을 막는 역할을 합니다. 미국 피부암 재단(The Skin Cancer Foundation)에 따르면, SPF 15 이상의 선크림을 매일 꾸준히 사용하면 편평세포암(SCC) 위험을 약 40%, 흑색종 위험을 **50%**까지 낮출 수 있습니다.
- 
+이러한 피부암, 선크림으로 막을 수 있습니다. 선크림은 피부암 예방의 핵심 도구이며, 자외선을 흡수하거나 반사하여 피부 세포의 손상을 막는 역할을 합니다. 미국 피부암 재단(The Skin Cancer Foundation)에 따르면, SPF 15 이상의 선크림을 매일 꾸준히 사용하면 편평세포암(SCC) 위험을 약 40%, 흑색종 위험을 **50%**까지 낮출 수 있습니다.`,
+      },
+      {
+        kind: 'image',
+        image: {
+          src: imageB,
+          alt: '선크림 사용과 피부암 예방 관련 인포그래픽 B',
+          label: 'B',
+        },
+      },
+      {
+        kind: 'text',
+        value: String.raw` 
                          
 
                 
@@ -60,17 +107,40 @@ const infoSections: InfoSection[] = [
 충분한 양 바르기: 대부분의 사람들은 권장량의 절반 정도만 바르는 경향이 있습니다. 성인의 경우, 몸 전체에 바를 때 소주잔 한 잔(약 35ml) 정도의 충분한 양을 바르는 것이 좋습니다. 얼굴에는 두 손가락 길이만큼 짜서 바르는 것이 효과적입니다.
  
 자주 덧바르기: 선크림은 땀이나 물, 마찰에 의해 쉽게 지워집니다. 야외 활동 시에는 최소 2시간마다 한 번씩 덧바르는 것이 좋습니다. 물놀이나 땀을 많이 흘린 후에는 즉시 다시 발라야 합니다.`,
+      },
+    ],
   },
   {
     id: 'fine-dust',
     title: '주제 3: 미세먼지와 폐암 위험',
-    content: String.raw`미세먼지 많은 날 마스크 안 쓰면 암 걸릴까?
+    blocks: [
+      {
+        kind: 'text',
+        value: String.raw`미세먼지 많은 날 마스크 안 쓰면 암 걸릴까?
  
  
 미세먼지, 암의 원인?
  
-미세먼지 많은 날 마스크를 한 번 안 썼다고 바로 암에 걸리는 것은 아니지만, 장기적이고 반복적인 노출은 폐암 발생 위험을 분명히 높인다.
-                                                  
+미세먼지 많은 날 마스크를 한 번 안 썼다고 바로 암에 걸리는 것은 아니지만, 장기적이고 반복적인 노출은 폐암 발생 위험을 분명히 높인다.`,
+      },
+      {
+        kind: 'imageRow',
+        images: [
+          {
+            src: imageC,
+            alt: '미세먼지와 폐암 위험 관련 인포그래픽 C',
+            label: 'C',
+          },
+          {
+            src: imageD,
+            alt: '미세먼지 마스크 착용 통계 인포그래픽 D',
+            label: 'D',
+          },
+        ],
+      },
+      {
+        kind: 'text',
+        value: String.raw`                                                  
 
           
 
@@ -88,11 +158,16 @@ const infoSections: InfoSection[] = [
 어떻게 예방할 수 있을까?
  
 미세먼지 농도가 높은 날 마스크를 착용하지 않는 습관이 반복되면, 나도 모르는 사이에 발암물질을 지속적으로 흡입하여 폐암 발생의 누적 위험도를 높이는 것과 같다. 일회성 사건이 아닌, '장기적인 노출 총량'이 중요한 문제이다. 보건용 마스크(KF80, KF94 등)는 이러한 미세먼지 입자를 효과적으로 걸러주어 폐를 보호하는 가장 기본적인 수단이다.`,
+      },
+    ],
   },
   {
     id: 'sleep',
     title: '주제 4: 수면과 암 위험',
-    content: String.raw`수면 부족, 정말 암의 원인이 될까?
+    blocks: [
+      {
+        kind: 'text',
+        value: String.raw`수면 부족, 정말 암의 원인이 될까?
  
 🔹 1. 결론부터 말하자면
 단기간의 수면 부족만으로 암이 직접 발생하는 것은 아닙니다. 그러나 지속적인 수면 부족은 암세포가 생기고 자라기 쉬운 환경을 만드는 주요 위험 요인으로 밝혀져 있습니다.
@@ -118,11 +193,16 @@ DNA 복구 지연
 를 Group 2A 발암 요인(인간에게 발암 가능성이 높은 요인) 으로 공식 분류하였습니다.
 🔹 5. 정리
 수면 부족은 ‘즉각적인 발암 요인’은 아니지만, 호르몬·면역·유전자 복구 과정에 악영향을 주어 암 발생 위험을 높입니다. 즉, “잠은 휴식이 아니라 세포를 지키는 방패막” 입니다.`,
+      },
+    ],
   },
   {
     id: 'charred-food',
     title: '주제 5: 탄 음식과 발암물질',
-    content: String.raw`탄 음식, 정말 암을 유발할까?
+    blocks: [
+      {
+        kind: 'text',
+        value: String.raw`탄 음식, 정말 암을 유발할까?
 🔹 1. 결론부터 말하자면
 예, 장기적으로는 발암 위험이 있습니다.
 음식이 탄 부분에는 인체에 유해한 발암성 화학물질이 생성됩니다.
@@ -156,6 +236,8 @@ DNA에 직접 결합해 돌연변이(mutation) 를 일으킵니다.
 🔹 6. 정리
 탄 음식은 즉각적인 독성은 없지만, DNA 손상을 누적시키는 발암성 물질을 포함합니다.
 따라서 **“불맛은 살리고, 탄맛은 피하라”**는 조언은 과학적 근거가 있는 말입니다.`,
+      },
+    ],
   },
 ]
 
@@ -200,11 +282,53 @@ function InfoItem({ section }: { section: InfoSection }) {
       {open && (
         <div
           id={`info-${section.id}`}
-          className="mt-4 rounded-xl border border-emerald-100 bg-white/80 p-4 text-slate-700 leading-relaxed whitespace-pre-wrap"
+          className="mt-4 space-y-5 rounded-xl border border-emerald-100 bg-white/80 p-4 text-slate-700 leading-relaxed"
         >
-          {section.content}
+          {section.blocks.map((block, index) => {
+            if (block.kind === 'text') {
+              return (
+                <div key={index} className="whitespace-pre-wrap">
+                  {block.value}
+                </div>
+              )
+            }
+            if (block.kind === 'image') {
+              return (
+                <figure key={index} className="flex flex-col items-center gap-3">
+                  <span className="inline-flex items-center rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold tracking-wide text-slate-700">
+                    이미지 {block.image.label}
+                  </span>
+                  <Image
+                    src={block.image.src}
+                    alt={block.image.alt}
+                    className="w-full max-w-2xl rounded-xl border border-slate-200/70 bg-white object-cover"
+                  />
+                </figure>
+              )
+            }
+            return (
+              <div
+                key={index}
+                className="flex flex-col items-center justify-center gap-6 sm:flex-row"
+              >
+                {block.images.map((image) => (
+                  <figure key={image.label} className="flex w-full max-w-sm flex-col items-center gap-3">
+                    <span className="inline-flex items-center rounded-full bg-slate-200 px-3 py-1 text-xs font-semibold tracking-wide text-slate-700">
+                      이미지 {image.label}
+                    </span>
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full rounded-xl border border-slate-200/70 bg-white object-cover"
+                    />
+                  </figure>
+                ))}
+              </div>
+            )
+          })}
         </div>
       )}
     </article>
   )
 }
+
