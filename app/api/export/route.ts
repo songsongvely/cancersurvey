@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
   const header = [
     'id','createdAt','consent','sex','ageGroup','region',
     'personalHistory','familyHistory','smokingStatus','alcoholFrequency','physicalActivity',
+    'sleepDuration','weeklyAlcoholDays','weeklyExerciseDays','sunscreenUsage','eatsCharredFood',
     'heightCm','weightKg','bmi','bmiCategory','screeningRecent','screeningTypes','symptoms',
     'knowledgeLevel','riskPerception','heardFrom','email','consentFollowup','comments'
   ]
@@ -30,6 +31,7 @@ export async function GET(req: NextRequest) {
     const line = [
       r.id, r.createdAt.toISOString(), r.consent, r.sex, r.ageGroup, r.region,
       r.personalHistory, r.familyHistory, r.smokingStatus, r.alcoholFrequency, r.physicalActivity,
+      r.sleepDuration, r.weeklyAlcoholDays, r.weeklyExerciseDays, r.sunscreenUsage, r.eatsCharredFood,
       r.heightCm, r.weightKg, r.bmi, r.bmiCategory, r.screeningRecent, r.screeningTypes, r.symptoms,
       r.knowledgeLevel, r.riskPerception, r.heardFrom, r.email, r.consentFollowup, r.comments
     ].map(escape).map(v => `"${v}"`).join(',')

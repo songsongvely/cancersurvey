@@ -43,6 +43,11 @@ export async function POST(req: NextRequest) {
         smokingStatus: data.smokingStatus,
         alcoholFrequency: data.alcoholFrequency,
         physicalActivity: data.physicalActivity,
+        sleepDuration: data.sleepDuration,
+        weeklyAlcoholDays: data.weeklyAlcoholDays,
+        weeklyExerciseDays: data.weeklyExerciseDays,
+        sunscreenUsage: data.sunscreenUsage,
+        eatsCharredFood: data.eatsCharredFood,
 
         heightCm: data.heightCm ?? null,
         weightKg: data.weightKg ?? null,

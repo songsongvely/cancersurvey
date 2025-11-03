@@ -10,8 +10,49 @@ import {
   CANCER_TYPES,
   SCREENING_TYPES,
   SYMPTOMS,
+  SLEEP_DURATION_OPTIONS,
+  WEEKLY_ALCOHOL_DAYS_OPTIONS,
+  WEEKLY_EXERCISE_DAYS_OPTIONS,
+  SUNSCREEN_USAGE_OPTIONS,
+  EATS_CHARRED_FOOD_OPTIONS,
   type SubmissionFormInput,
 } from "@/lib/validators";
+
+const sleepOptions = [
+  { value: SLEEP_DURATION_OPTIONS[0], label: "① 3시간 이하" },
+  { value: SLEEP_DURATION_OPTIONS[1], label: "② 3시간-4시간 반" },
+  { value: SLEEP_DURATION_OPTIONS[2], label: "③ 4시간 반-6시간" },
+  { value: SLEEP_DURATION_OPTIONS[3], label: "④ 6시간-7시간" },
+  { value: SLEEP_DURATION_OPTIONS[4], label: "⑤ 7시간 이상" },
+] as const;
+
+const weeklyAlcoholDayOptions = [
+  { value: WEEKLY_ALCOHOL_DAYS_OPTIONS[0], label: "① 아예 안함" },
+  { value: WEEKLY_ALCOHOL_DAYS_OPTIONS[1], label: "② 1일" },
+  { value: WEEKLY_ALCOHOL_DAYS_OPTIONS[2], label: "③ 2일" },
+  { value: WEEKLY_ALCOHOL_DAYS_OPTIONS[3], label: "④ 3일" },
+  { value: WEEKLY_ALCOHOL_DAYS_OPTIONS[4], label: "⑤ 그 이상" },
+] as const;
+
+const weeklyExerciseDayOptions = [
+  { value: WEEKLY_EXERCISE_DAYS_OPTIONS[0], label: "① 아예 안함" },
+  { value: WEEKLY_EXERCISE_DAYS_OPTIONS[1], label: "② 1일-2일" },
+  { value: WEEKLY_EXERCISE_DAYS_OPTIONS[2], label: "③ 3일" },
+  { value: WEEKLY_EXERCISE_DAYS_OPTIONS[3], label: "④ 4일" },
+  { value: WEEKLY_EXERCISE_DAYS_OPTIONS[4], label: "⑤ 그 이상" },
+] as const;
+
+const sunscreenUsageOptions = [
+  { value: SUNSCREEN_USAGE_OPTIONS[0], label: "① 아예 안 바름" },
+  { value: SUNSCREEN_USAGE_OPTIONS[1], label: "② 가끔 바름" },
+  { value: SUNSCREEN_USAGE_OPTIONS[2], label: "③ 대체로 바름" },
+  { value: SUNSCREEN_USAGE_OPTIONS[3], label: "④ 항상 바름" },
+] as const;
+
+const eatsCharredFoodOptions = [
+  { value: EATS_CHARRED_FOOD_OPTIONS[0], label: "① 예" },
+  { value: EATS_CHARRED_FOOD_OPTIONS[1], label: "② 아니요" },
+] as const;
 
 export default function SurveyForm() {
   const router = useRouter();
@@ -221,6 +262,213 @@ export default function SurveyForm() {
             <p className="helper">
               예상 BMI: <b>{bmi}</b>
             </p>
+          )}
+        </div>
+      </section>
+
+      <section className="space-y-6">
+        <div>
+          <p className="label font-semibold">
+            1. 하루 평균 수면 시간이 얼마나 되시나요?
+          </p>
+          <Controller
+            name="sleepDuration"
+            control={control}
+            render={({ field }) => (
+              <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {sleepOptions.map((option, index) => {
+                  const checked = field.value === option.value;
+                  return (
+                    <label
+                      key={option.value}
+                      className={clsx(
+                        "choice-tile",
+                        checked && "choice-tile-active"
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        className="sr-only"
+                        name={field.name}
+                        value={option.value}
+                        checked={checked}
+                        onChange={() => field.onChange(option.value)}
+                        onBlur={field.onBlur}
+                        ref={index === 0 ? field.ref : undefined}
+                      />
+                      {option.label}
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+          />
+          {errors.sleepDuration && (
+            <p className="error">{errors.sleepDuration.message}</p>
+          )}
+        </div>
+
+        <div>
+          <p className="label font-semibold">
+            2. 1주일 동안 며칠 정도 음주 하시나요?
+          </p>
+          <Controller
+            name="weeklyAlcoholDays"
+            control={control}
+            render={({ field }) => (
+              <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {weeklyAlcoholDayOptions.map((option, index) => {
+                  const checked = field.value === option.value;
+                  return (
+                    <label
+                      key={option.value}
+                      className={clsx(
+                        "choice-tile",
+                        checked && "choice-tile-active"
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        className="sr-only"
+                        name={field.name}
+                        value={option.value}
+                        checked={checked}
+                        onChange={() => field.onChange(option.value)}
+                        onBlur={field.onBlur}
+                        ref={index === 0 ? field.ref : undefined}
+                      />
+                      {option.label}
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+          />
+          {errors.weeklyAlcoholDays && (
+            <p className="error">{errors.weeklyAlcoholDays.message}</p>
+          )}
+        </div>
+
+        <div>
+          <p className="label font-semibold">
+            3. 1주일에 30분 이상 운동하는 날이 몇일 정도 되시나요?
+          </p>
+          <Controller
+            name="weeklyExerciseDays"
+            control={control}
+            render={({ field }) => (
+              <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
+                {weeklyExerciseDayOptions.map((option, index) => {
+                  const checked = field.value === option.value;
+                  return (
+                    <label
+                      key={option.value}
+                      className={clsx(
+                        "choice-tile",
+                        checked && "choice-tile-active"
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        className="sr-only"
+                        name={field.name}
+                        value={option.value}
+                        checked={checked}
+                        onChange={() => field.onChange(option.value)}
+                        onBlur={field.onBlur}
+                        ref={index === 0 ? field.ref : undefined}
+                      />
+                      {option.label}
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+          />
+          {errors.weeklyExerciseDays && (
+            <p className="error">{errors.weeklyExerciseDays.message}</p>
+          )}
+        </div>
+
+        <div>
+          <p className="label font-semibold">
+            4. 자외선 지수가 높은 날, 선크림을 바르시나요?
+          </p>
+          <Controller
+            name="sunscreenUsage"
+            control={control}
+            render={({ field }) => (
+              <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {sunscreenUsageOptions.map((option, index) => {
+                  const checked = field.value === option.value;
+                  return (
+                    <label
+                      key={option.value}
+                      className={clsx(
+                        "choice-tile",
+                        checked && "choice-tile-active"
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        className="sr-only"
+                        name={field.name}
+                        value={option.value}
+                        checked={checked}
+                        onChange={() => field.onChange(option.value)}
+                        onBlur={field.onBlur}
+                        ref={index === 0 ? field.ref : undefined}
+                      />
+                      {option.label}
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+          />
+          {errors.sunscreenUsage && (
+            <p className="error">{errors.sunscreenUsage.message}</p>
+          )}
+        </div>
+
+        <div>
+          <p className="label font-semibold">
+            5. 불판에 굽는 음식을 먹을 때, 탄 부분이 있어도 그냥 먹는 편인가요?
+          </p>
+          <Controller
+            name="eatsCharredFood"
+            control={control}
+            render={({ field }) => (
+              <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {eatsCharredFoodOptions.map((option, index) => {
+                  const checked = field.value === option.value;
+                  return (
+                    <label
+                      key={option.value}
+                      className={clsx(
+                        "choice-tile",
+                        checked && "choice-tile-active"
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        className="sr-only"
+                        name={field.name}
+                        value={option.value}
+                        checked={checked}
+                        onChange={() => field.onChange(option.value)}
+                        onBlur={field.onBlur}
+                        ref={index === 0 ? field.ref : undefined}
+                      />
+                      {option.label}
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+          />
+          {errors.eatsCharredFood && (
+            <p className="error">{errors.eatsCharredFood.message}</p>
           )}
         </div>
       </section>

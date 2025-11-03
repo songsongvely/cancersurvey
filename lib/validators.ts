@@ -38,6 +38,39 @@ export const SYMPTOMS = [
   "해당 없음",
 ] as const;
 
+export const SLEEP_DURATION_OPTIONS = [
+  "LE_3_HOURS",
+  "H3_TO_4_5",
+  "H4_5_TO_6",
+  "H6_TO_7",
+  "GE_7_HOURS",
+] as const;
+
+export const WEEKLY_ALCOHOL_DAYS_OPTIONS = [
+  "NONE",
+  "ONE",
+  "TWO",
+  "THREE",
+  "FOUR_PLUS",
+] as const;
+
+export const WEEKLY_EXERCISE_DAYS_OPTIONS = [
+  "NONE",
+  "ONE_TWO",
+  "THREE",
+  "FOUR",
+  "FIVE_PLUS",
+] as const;
+
+export const SUNSCREEN_USAGE_OPTIONS = [
+  "NEVER",
+  "SOMETIMES",
+  "MOSTLY",
+  "ALWAYS",
+] as const;
+
+export const EATS_CHARRED_FOOD_OPTIONS = ["YES", "NO"] as const;
+
 // -------- 공통 필드 (consent 제외) --------
 const baseFields = {
   sex: z.enum(["MALE", "FEMALE", "OTHER"], {
@@ -73,6 +106,21 @@ const baseFields = {
   ),
   physicalActivity: z.enum(["LOW", "MEDIUM", "HIGH"], {
     required_error: "신체활동 수준을 선택해 주세요.",
+  }),
+  sleepDuration: z.enum(SLEEP_DURATION_OPTIONS, {
+    required_error: "평균 수면 시간을 선택해 주세요.",
+  }),
+  weeklyAlcoholDays: z.enum(WEEKLY_ALCOHOL_DAYS_OPTIONS, {
+    required_error: "주간 음주 빈도를 선택해 주세요.",
+  }),
+  weeklyExerciseDays: z.enum(WEEKLY_EXERCISE_DAYS_OPTIONS, {
+    required_error: "주간 운동 일수를 선택해 주세요.",
+  }),
+  sunscreenUsage: z.enum(SUNSCREEN_USAGE_OPTIONS, {
+    required_error: "선크림 사용 빈도를 선택해 주세요.",
+  }),
+  eatsCharredFood: z.enum(EATS_CHARRED_FOOD_OPTIONS, {
+    required_error: "탄 음식 섭취 여부를 선택해 주세요.",
   }),
 
   heightCm: z

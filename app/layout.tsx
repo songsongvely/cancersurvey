@@ -23,7 +23,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   지역 사회 의학 3조
                 </span>
               </Link>
-              <nav className="flex flex-shrink-0 items-center gap-2">
+              <nav className="flex flex-shrink-0 items-center gap-3">
+                <span className="badge whitespace-nowrap bg-indigo-50 text-indigo-600">
+                  총 방문자 <b className="ml-1 text-indigo-700">83명</b>
+                </span>
                 <Link className="btn-ghost whitespace-nowrap" href="/survey">설문 시작</Link>
                 <Link className="btn-ghost whitespace-nowrap" href="/privacy">개인정보 안내</Link>
               </nav>
