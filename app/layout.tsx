@@ -32,7 +32,7 @@ export default function RootLayout({
               </Link>
               <nav className="flex flex-shrink-0 items-center gap-3">
                 <span className="badge whitespace-nowrap bg-indigo-50 text-indigo-600">
-                  총 방문자 <b className="ml-1 text-indigo-700">483명</b>
+                  총 방문자 <b className="ml-1 text-indigo-700">5834명</b>
                 </span>
                 <Link className="btn-ghost whitespace-nowrap" href="/survey">
                   설문 시작
